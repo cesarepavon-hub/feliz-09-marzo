@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Boleto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+            background: linear-gradient(135deg, #1a1a1a, #333333);
+        }
+        .container {
+            text-align: center;
+            padding: 15px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .ticket {
+            position: relative;
+            background: linear-gradient(145deg, #ff3366, #ff5e62);
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            color: white;
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .ticket:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .ticket:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+        .ticket:hover .light {
+            opacity: 1;
+        }
+        .light {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .band-name {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+        .event-details {
+            margin: 20px 0;
+            font-size: 24px;
+            font-weight: 300;
+        }
+        .date {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .city {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .ticket-number {
+            font-size: 14px;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .barcode {
+            margin: 20px auto;
+            padding: 10px;
+            background: white;
+            max-width: 200px;
+            border-radius: 8px;
+        }
+        .barcode img {
+            max-width: 100%;
+            height: auto;
+        }
+        .terms {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .checkbox-container label {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .accept-btn {
+            background: linear-gradient(to right, #ff3366, #ff5e62);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        }
+        .accept-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.5);
+        }
+        .accept-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(255, 51, 102, 0.9), 0 0 30px rgba(255, 51, 102, 0.5);
+            }
+        }
+        .celebrate {
+            animation: glow 1.5s infinite alternate;
+        }
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confetti"></canvas>
+    <div class="container">
+        <div class="ticket">
+            <div class="light"></div>
+            <div class="band-name">LATIN MAFIA</div>
+            <div class="event-details">EN VIVO</div>
+            <div class="date">31 DE MAYO 2025</div>
+            <div class="city">CDMX</div>
+            <div class="ticket-number">BOLETO: LM-31052025-AMOR</div>
+            
+            <div class="barcode">
+                <div style="width: 90%; height: 30px; background-color: black; margin: 5px auto; border-radius: 3px;"></div>
+                <div style="width: 80%; height: 5px; background-color: black; margin: 5px auto; border-radius: 3px;"></div>
+                <div style="width: 70%; height: 5px; background-color: black; margin: 5px auto; border-radius: 3px;"></div>
+            </div>
+        </div>
+        
+        <div class="terms">
+            <p>Al hacer click en "Acepto" estás confirmando los términos y condiciones que ponga tu novio, esto es muchos besos y manoseadas durante el concierto.</p>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="terms-check">
+                <label for="terms-check">He leído y acepto los términos</label>
+            </div>
+            
+            <button id="accept-btn" class="accept-btn" disabled>ACEPTO</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('terms-check').addEventListener('change', function() {
+            document.getElementById('accept-btn').disabled = !this.checked;
+        });
+        
+        document.getElementById('accept-btn').addEventListener('click', function() {
+            this.classList.add('celebrate');
+            this.textContent = '¡TE AMO!';
+            document.querySelector('.ticket').classList.add('celebrate');
+            
+            // Mostrar confeti
+            const confetti = document.getElementById('confetti');
+            confetti.style.display = 'block';
+            
+            // Función para el confeti
+            const ctx = confetti.getContext('2d');
+            confetti.width = window.innerWidth;
+            confetti.height = window.innerHeight;
+            
+            const pieces = [];
+            const colors = ['#ff3366', '#ff5e62', '#ffffff', '#ffcd00', '#ff00cc'];
+            
+            for (let i = 0; i < 150; i++) {
+                pieces.push({
+                    x: Math.random() * confetti.width,
+                    y: -Math.random() * confetti.height,
+                    width: Math.random() * 10 + 5,
+                    height: Math.random() * 10 + 5,
+                    speed: Math.random() * 5 + 2,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, confetti.width, confetti.height);
+                
+                pieces.forEach(piece => {
+                    ctx.fillStyle = piece.color;
+                    ctx.fillRect(piece.x, piece.y, piece.width, piece.height);
+                    piece.y += piece.speed;
+                    
+                    if (piece.y > confetti.height) {
+                        piece.y = -piece.height;
+                        piece.x = Math.random() * confetti.width;
+                    }
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        });
+    </script>
+</body>
+</html>
